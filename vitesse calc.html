@@ -1,0 +1,149 @@
+<html>
+<style>
+body {
+        background-image: url("ternet.jpg");
+		background-size: 100% 100%;
+        text-align: center;
+        padding-top: 5%;
+		color:white;
+		color: white;
+		text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
+    }
+    
+	h1{
+	
+		font-size : 75px;
+		margin-bottom : 5px;
+	
+	}
+	h4{
+		margin-bottom : 0px;
+		margin-top : 10px;
+		font-size:30px;
+	
+	
+	}
+    p, input, select, button{
+		font-size : 20px;
+	
+	
+	
+	}
+	
+	
+}
+</style>
+<body>
+    <h1>Calcul</h1>
+	<h4 style = "margin-bottom : 0px">Quantitee</h4>
+    <input id="quant" type="text" size = 6 value=1>
+	<select id="quant2">
+		<option value = "0"> - </option>
+		<option value = "1">k</option>
+		<option value = "2">M</option>
+		<option value = "3" selected="selected">G</option>
+		<option value = "4">T</option>
+		<option value = "5">P</option>
+	</select>
+	<select id="quant3">
+		<option value = "1">b</option>
+		<option value = "8" selected="selected">B</option>
+		<option value = "8">O</option>
+	</select>
+	<h4 style = "margin-bottom : 0px">Vitesse</h4>
+	<input id="vit" type="text" size = 6 value=1>
+	<select id="vit2">
+		<option value = "0"> - </option>
+		<option value = "1">k</option>
+		<option value = "2" selected="selected" >M</option>
+		<option value = "3">G</option>
+		<option value = "4">T</option>
+		<option value = "5">P</option>
+	</select>
+	<select id="vit3">
+		<option value = "1">b</option>
+		<option value = "8" selected="selected">B</option>
+		<option value = "8">O</option>
+	</select>
+	<br>
+    <button onclick="go('test')" id="testButton" style='margin-top:15px'>Go</button>
+	
+	<br>
+	<p id="reponse"> </p>
+    <p id="fin"> </p>
+  
+
+    <script>
+        function go(id) {
+            var mult = ["","k","M","G","T","P"]
+            var quant = document.getElementById('quant').value;
+			var vit = document.getElementById('vit').value;
+			
+			var quantBit = Math.pow(1000,document.getElementById('quant2').value)*document.getElementById('quant3').value
+			
+			quant*=quantBit
+			
+			var vitBit = Math.pow(1000,document.getElementById('vit2').value)*document.getElementById('vit3').value
+			
+			vit*=vitBit
+			
+			var dur = quant/vit;
+			var temps = dur*1000
+			var h = Math.floor(dur/3600)
+			dur-= (h*3600) 
+			var m = Math.floor(dur/60)
+			dur-= (m*60)
+			var s = Math.floor(dur)
+		
+            var output = h+":"+m+":"+s
+			//var output = quant + " / " + vit + " = " + dur
+            
+            document.getElementById("reponse").innerHTML = "Durée : <b>"+dateAffichage(temps)+"</b>"
+			var d=new Date(temps+new Date().getTime());
+			document.getElementById("fin").innerHTML = "Date de fin : <b>"+formatDate(d)+"</b>";
+			
+        }
+		function dateAffichage(date){
+		
+			var days = Math.floor(date / (1000 * 60 * 60 * 24));
+			var hours = Math.floor((date % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			var minutes = Math.floor((date % (1000 * 60 * 60)) / (1000 * 60));
+			var seconds = Math.floor((date % (1000 * 60)) / 1000);
+			var output = "";
+			if(days>0)
+				output += days + "d ";
+			if(hours>0||days>0)
+				output += hours + "h ";
+			
+			return output + minutes + "m " + seconds + "s";
+		
+		
+		
+		}
+		function formatDate(date) {
+		  var monthNames = [
+			"January", "February", "March",
+			"April", "May", "June", "July",
+			"August", "September", "October",
+			"November", "December"
+		  ];
+
+		  var day = date.getDate();
+		  var monthIndex = date.getMonth();
+		  var year = date.getFullYear();
+		  var hour = date.getHours();
+		  var minute = date.getMinutes()
+		  var seconds = date.getSeconds()
+
+		  return day + ' ' + monthNames[monthIndex] + ' ' + year+ ' à '+hour+'h '+minute+"m "+seconds+"s";
+		}
+       
+    </script>
+
+</body>
+
+</html>
